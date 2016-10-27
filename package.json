@@ -2,9 +2,13 @@
   "name": "kaner",
   "version": "1.0.0",
   "description": "txt reader",
-  "main": "reader.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "/Applications/Electron.app/Contents/MacOS/Electron .",
+    "package": "electron-packager ./ --all --version=1.4.3 --icon=./ico/ico.ico --out=../exec/ --overwrite",
+    "package-win64": "electron-packager ./ --platform=win32 --arch=x64 --version=1.4.3 --icon=./ico/ico.ico --out=../exec/ --overwrite",
+    "package-win32": "electron-packager ./ --platform=win32 --arch=ia32 --version=1.4.3 --icon=./ico/ico.ico --out=../exec/ --overwrite",
+    "package-osx": "electron-packager ./ --platform=darwin --arch=x64 --version=1.4.3 --icon=./ico/ico.ico --out=../exec/ --overwrite"
   },
   "repository": {
     "type": "git",
@@ -22,6 +26,10 @@
   "homepage": "https://github.com/kanrin/Kaner#readme",
   "dependencies": {
     "fs": "0.0.1-security",
-    "iconv-lite": "^0.4.13"
+    "iconv-lite": "^0.4.13",
+    "jquery": "^3.1.1"
+  },
+  "devDependencies": {
+    "electron-packager": "^7.3.0"
   }
 }

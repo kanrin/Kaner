@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>pyhton风格</title>
+    <!-- <link rel="stylesheet" href="../public/stylesheets/bootstrap.css" charset="utf-8"> -->
+    <link rel="stylesheet" href="../public/stylesheets/vendor/bootstrap/css/bootstrap.min.css" charset="utf-8">
+    <link rel="stylesheet" href="../public/stylesheets/flat-ui.css" charset="utf-8">
+    <!-- <link rel="stylesheet" href="../public/stylesheets/metro.min.css" charset="utf-8"> -->
+    <link rel="stylesheet" href="../public/stylesheets/buttons.css" charset="utf-8">
+    <link rel="stylesheet" href="../public/stylesheets/def.css" charset="utf-8">
+    <script type="text/javascript" src="../public/javascripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../public/javascripts/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- 标签页 -->
+    <ul class="nav nav-tabs nav-justified" id="title">
+        <li role="presentation" class="active"><a href="#combine_cfg" data-toggle="tab">combine_cfg</a></li>
+        <li role="presentation"><a href="#dbout_cfg" data-toggle="tab">dbout_cfg</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="combine_cfg">
+            <table border="0" width="100%" align="center">
+                <tbody>
+                    <tr>
+                        <td align="center">
+                            <table class="table table-hover table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td class="warning text-right">slave数据库名：</td>
+                                        <td class="warning">
+                                            <input class="form-control input-sm" type="text" name="slave_db" id="slave_db" value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="info text-right">master数据库名：</td>
+                                        <td class="info">
+                                            <input class="form-control input-sm" type="text" name="olddb" id="olddb" value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="danger text-right">新生成的数据库名：</td>
+                                        <td class="danger">
+                                            <input class="form-control input-sm" type="text" name="newdb" id="newdb" value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="info text-right">master区id：</td>
+                                        <td class="info">
+                                            <input class="form-control input-sm" type="text" name="master_id" id="master_id" value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="warning text-right">slave区id：</td>
+                                        <td class="warning">
+                                            <input class="form-control input-sm" type="text" name="slave_id" id="slave_id" value="">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <div class="button-group" role="group"> -->
+                            <button id="add" type="button" class="button button-primary button-raised button-pill button-rounded" onclick="add()">添加</button>
+                            <button id="del" type="button" class="button button-primary button-raised button-pill button-rounded" data-toggle="modal" data-target=".del_out">撤销</button>
+                            <button id="clear" type="button" class="button button-caution button-raised button-pill button-rounded" data-toggle="modal" data-target=".del_div1">清空</button>
+                            <!-- </div> -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="container">
+                <br>
+                <div class="alert alert-danger alert-dismissible" id="main_tmp" name="main_tmp" style="display:none" role="alert">
+                    <button type="button" class="close" onclick="hide('main_tmp')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div id="out_tmp" style="word-wrap:break-word;"></div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="alert alert-info" id="main" name="main" style="display:none">
+                    <div style="word-wrap:break-word;" id="out"></div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="dbout_cfg">
+            <div class="container">
+                <div class="form-group">
+                    <label for="text">要导出的数据库后缀:</label>
+                    <input type="text" class="form-control" id="combine_out">
+                </div>
+                <div class="form-group">
+                    <label for="text">合服合并的原始区服信息(一行一服)</label>
+                    <textarea name="combine_infos" id="combine_infos" cols="30" rows="10" class="form-control"></textarea>
+                </div>
+            </div>
+            <br>
+            <div class="container">
+                <center>
+                    <!-- <div class="button-group" role="group"> -->
+                    <button id="add" class="button button-primary button-raised button-pill button-rounded" type="button" onclick="add_info()">添加</button>
+                    <button id="del" type="button" class="button button-primary button-raised button-pill button-rounded" data-toggle="modal" data-target=".del_info">撤销</button>
+                    <button id="clear" type="button" class="button button-caution button-raised button-pill button-rounded" data-toggle="modal" data-target=".del_div2">清空</button>
+                    <!-- </div> -->
+                </center>
+                <br>
+                <div class="alert alert-danger alert-dismissible" id="outinfo_tmp" name="outinfo_tmp" style="display:none" role="alert">
+                    <button type="button" class="close" aria-label="Close" onclick="hide('outinfo_tmp');"><span aria-hidden="true">&times;</span></button>
+                    <div id="out2_tmp" style="word-wrap:break-word;"></div>
+                </div>
+                <div class="alert alert-info" id="outinfo" name="outinfo" style="display:none">
+                    <div style="word-wrap:break-word;" id="out2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- combine_cfg撤销框 -->
+    <div class="modal fade bs-example-modal-sm del_out">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>确定撤销吗?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="del_out()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- combine_cfg撤销框 -->
+    <!-- combine_cfg清除框 -->
+    <div class="modal fade bs-example-modal-sm del_div1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>确定清除吗?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="del_div('main')">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- combine_cfg清除框 -->
+    <!-- dbout_cfg撤销框 -->
+    <div class="modal fade bs-example-modal-sm del_info">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>确定撤销吗?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="del_info()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- dbout_cfg撤销框 -->
+    <!-- dbout_cfg清除框 -->
+    <div class="modal fade bs-example-modal-sm del_div2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>确定清除吗?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="del_div('outinfo')">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- dbout_cfg清除框 -->
+
+    <!-- 提示框 -->
+    <div class="modal fade bs-example-modal-sm" id="msg" data-toggle="modal" data-target="#msg">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>请填写完整信息！</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 无数据提示框 -->
+    <div class="modal fade bs-example-modal-sm" id="nodel" data-toggle="modal" data-target="#nodel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>无数据，无需撤销！</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../public/javascripts/do.js"></script>
+</body>
