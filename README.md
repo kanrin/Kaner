@@ -1,0 +1,2 @@
+# KanrinReader
+TXT Reader
