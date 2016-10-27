@@ -1,3 +1,3 @@
-# KanrinReader
+# Kaner
 TXT Reader
 >Building......
